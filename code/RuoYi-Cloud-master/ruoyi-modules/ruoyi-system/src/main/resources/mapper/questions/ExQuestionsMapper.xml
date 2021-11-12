@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ExQuestionsMapper">
+    
+    <resultMap type="ExQuestions" id="ExQuestionsResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="content"    column="content"    />
+        <result property="image"    column="image"    />
+        <result property="classId"    column="class_id"    />
+        <result property="point"    column="point"    />
+        <result property="answer"    column="answer"    />
+        <result property="setterid"    column="setterid"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="analysis"    column="analysis"    />
+        <result property="isDelete"    column="is_delete"    />
+        <result property="optionA"    column="option_a"    />
+        <result property="optionB"    column="option_b"    />
+        <result property="optionC"    column="option_c"    />
+        <result property="optionD"    column="option_d"    />
+    </resultMap>
+
+    <sql id="selectExQuestionsVo">
+        select id, type, content, image, class_id, point, answer, setterid, create_time, update_time, remark, analysis, is_delete, option_a, option_b, option_c, option_d from ex_questions
+    </sql>
+
+    <select id="selectExQuestionsList" parameterType="ExQuestions" resultMap="ExQuestionsResult">
+        <include refid="selectExQuestionsVo"/>
+        <where>  
+            <if test="type != null "> and type = #{type}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="classId != null  and classId != ''"> and class_id = #{classId}</if>
+            <if test="point != null  and point != ''"> and point = #{point}</if>
+            <if test="answer != null  and answer != ''"> and answer = #{answer}</if>
+            <if test="setterid != null "> and setterid = #{setterid}</if>
+            <if test="isDelete != null "> and is_delete = #{isDelete}</if>
+        </where>
+    </select>
+    
+    <select id="selectExQuestionsById" parameterType="Long" resultMap="ExQuestionsResult">
+        <include refid="selectExQuestionsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertExQuestions" parameterType="ExQuestions" useGeneratedKeys="true" keyProperty="id">
+        insert into ex_questions
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="image != null and image != ''">image,</if>
+            <if test="classId != null and classId != ''">class_id,</if>
+            <if test="point != null and point != ''">point,</if>
+            <if test="answer != null and answer != ''">answer,</if>
+            <if test="setterid != null">setterid,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="analysis != null and analysis != ''">analysis,</if>
+            <if test="isDelete != null">is_delete,</if>
+            <if test="optionA != null">option_a,</if>
+            <if test="optionB != null">option_b,</if>
+            <if test="optionC != null">option_c,</if>
+            <if test="optionD != null">option_d,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="image != null and image != ''">#{image},</if>
+            <if test="classId != null and classId != ''">#{classId},</if>
+            <if test="point != null and point != ''">#{point},</if>
+            <if test="answer != null and answer != ''">#{answer},</if>
+            <if test="setterid != null">#{setterid},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            <if test="analysis != null and analysis != ''">#{analysis},</if>
+            <if test="isDelete != null">#{isDelete},</if>
+            <if test="optionA != null">#{optionA},</if>
+            <if test="optionB != null">#{optionB},</if>
+            <if test="optionC != null">#{optionC},</if>
+            <if test="optionD != null">#{optionD},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExQuestions" parameterType="ExQuestions">
+        update ex_questions
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="image != null and image != ''">image = #{image},</if>
+            <if test="classId != null and classId != ''">class_id = #{classId},</if>
+            <if test="point != null and point != ''">point = #{point},</if>
+            <if test="answer != null and answer != ''">answer = #{answer},</if>
+            <if test="setterid != null">setterid = #{setterid},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            <if test="analysis != null and analysis != ''">analysis = #{analysis},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            <if test="optionA != null">option_a = #{optionA},</if>
+            <if test="optionB != null">option_b = #{optionB},</if>
+            <if test="optionC != null">option_c = #{optionC},</if>
+            <if test="optionD != null">option_d = #{optionD},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExQuestionsById" parameterType="Long">
+        delete from ex_questions where id = #{id}
+    </delete>
+
+    <delete id="deleteExQuestionsByIds" parameterType="String">
+        delete from ex_questions where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
