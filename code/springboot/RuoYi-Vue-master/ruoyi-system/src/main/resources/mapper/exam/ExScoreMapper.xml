@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ExScoreMapper">
+    
+    <resultMap type="ExScore" id="ExScoreResult">
+        <result property="id"    column="id"    />
+        <result property="examId"    column="exam_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="score"    column="score"    />
+        <result property="classId"    column="class_id"    />
+        <result property="sheetId"    column="sheet_id"    />
+    </resultMap>
+
+    <sql id="selectExScoreVo">
+        select id, exam_id, user_id, score, class_id, sheet_id from ex_score
+    </sql>
+
+    <select id="selectExScoreList" parameterType="ExScore" resultMap="ExScoreResult">
+        <include refid="selectExScoreVo"/>
+        <where>  
+            <if test="examId != null  and examId != ''"> and exam_id = #{examId}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="score != null "> and score = #{score}</if>
+            <if test="classId != null  and classId != ''"> and class_id = #{classId}</if>
+            <if test="sheetId != null "> and sheet_id = #{sheetId}</if>
+        </where>
+    </select>
+    
+    <select id="selectExScoreById" parameterType="Long" resultMap="ExScoreResult">
+        <include refid="selectExScoreVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertExScore" parameterType="ExScore" useGeneratedKeys="true" keyProperty="id">
+        insert into ex_score
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="examId != null and examId != ''">exam_id,</if>
+            <if test="userId != null and userId != ''">user_id,</if>
+            <if test="score != null">score,</if>
+            <if test="classId != null and classId != ''">class_id,</if>
+            <if test="sheetId != null">sheet_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="examId != null and examId != ''">#{examId},</if>
+            <if test="userId != null and userId != ''">#{userId},</if>
+            <if test="score != null">#{score},</if>
+            <if test="classId != null and classId != ''">#{classId},</if>
+            <if test="sheetId != null">#{sheetId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExScore" parameterType="ExScore">
+        update ex_score
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="examId != null and examId != ''">exam_id = #{examId},</if>
+            <if test="userId != null and userId != ''">user_id = #{userId},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="classId != null and classId != ''">class_id = #{classId},</if>
+            <if test="sheetId != null">sheet_id = #{sheetId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExScoreById" parameterType="Long">
+        delete from ex_score where id = #{id}
+    </delete>
+
+    <delete id="deleteExScoreByIds" parameterType="String">
+        delete from ex_score where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

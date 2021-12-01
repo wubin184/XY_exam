@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ExClassMapper">
+    
+    <resultMap type="ExClass" id="ExClassResult">
+        <result property="id"    column="id"    />
+        <result property="className"    column="class_name"    />
+        <result property="content"    column="content"    />
+        <result property="major"    column="major"    />
+        <result property="teacher"    column="teacher"    />
+        <result property="students"    column="students"    />
+    </resultMap>
+
+    <sql id="selectExClassVo">
+        select id, class_name, content, major, teacher, students from ex_class
+    </sql>
+
+    <select id="selectExClassList" parameterType="ExClass" resultMap="ExClassResult">
+        <include refid="selectExClassVo"/>
+        <where>  
+            <if test="className != null  and className != ''"> and class_name like concat('%', #{className}, '%')</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="major != null  and major != ''"> and major = #{major}</if>
+            <if test="teacher != null  and teacher != ''"> and teacher = #{teacher}</if>
+            <if test="students != null  and students != ''"> and students = #{students}</if>
+        </where>
+    </select>
+    
+    <select id="selectExClassById" parameterType="Long" resultMap="ExClassResult">
+        <include refid="selectExClassVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertExClass" parameterType="ExClass" useGeneratedKeys="true" keyProperty="id">
+        insert into ex_class
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="className != null and className != ''">class_name,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="major != null and major != ''">major,</if>
+            <if test="teacher != null and teacher != ''">teacher,</if>
+            <if test="students != null and students != ''">students,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="className != null and className != ''">#{className},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="major != null and major != ''">#{major},</if>
+            <if test="teacher != null and teacher != ''">#{teacher},</if>
+            <if test="students != null and students != ''">#{students},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExClass" parameterType="ExClass">
+        update ex_class
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="className != null and className != ''">class_name = #{className},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="major != null and major != ''">major = #{major},</if>
+            <if test="teacher != null and teacher != ''">teacher = #{teacher},</if>
+            <if test="students != null and students != ''">students = #{students},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExClassById" parameterType="Long">
+        delete from ex_class where id = #{id}
+    </delete>
+
+    <delete id="deleteExClassByIds" parameterType="String">
+        delete from ex_class where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ExExamMapper">
+    
+    <resultMap type="ExExam" id="ExExamResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="paperId"    column="paper_id"    />
+        <result property="state"    column="state"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="totalTime"    column="total_time"    />
+        <result property="classId"    column="class_id"    />
+        <result property="term"    column="term"    />
+    </resultMap>
+
+    <sql id="selectExExamVo">
+        select id, title, content, paper_id, state, start_time, end_time, create_time, update_time, total_time, class_id, term from ex_exam
+    </sql>
+
+    <select id="selectExExamList" parameterType="ExExam" resultMap="ExExamResult">
+        <include refid="selectExExamVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="paperId != null  and paperId != ''"> and paper_id = #{paperId}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="totalTime != null "> and total_time = #{totalTime}</if>
+            <if test="classId != null  and classId != ''"> and class_id = #{classId}</if>
+            <if test="term != null  and term != ''"> and term = #{term}</if>
+        </where>
+    </select>
+    
+    <select id="selectExExamById" parameterType="Long" resultMap="ExExamResult">
+        <include refid="selectExExamVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertExExam" parameterType="ExExam" useGeneratedKeys="true" keyProperty="id">
+        insert into ex_exam
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">title,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="paperId != null and paperId != ''">paper_id,</if>
+            <if test="state != null">state,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="totalTime != null">total_time,</if>
+            <if test="classId != null and classId != ''">class_id,</if>
+            <if test="term != null and term != ''">term,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="paperId != null and paperId != ''">#{paperId},</if>
+            <if test="state != null">#{state},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="totalTime != null">#{totalTime},</if>
+            <if test="classId != null and classId != ''">#{classId},</if>
+            <if test="term != null and term != ''">#{term},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExExam" parameterType="ExExam">
+        update ex_exam
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="paperId != null and paperId != ''">paper_id = #{paperId},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="totalTime != null">total_time = #{totalTime},</if>
+            <if test="classId != null and classId != ''">class_id = #{classId},</if>
+            <if test="term != null and term != ''">term = #{term},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExExamById" parameterType="Long">
+        delete from ex_exam where id = #{id}
+    </delete>
+
+    <delete id="deleteExExamByIds" parameterType="String">
+        delete from ex_exam where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
