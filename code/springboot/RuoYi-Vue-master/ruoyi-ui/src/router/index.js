@@ -46,6 +46,7 @@ export const constantRoutes = [
   },
   {
     path: '/register',
+    name: 'Register',
     component: (resolve) => require(['@/views/register'], resolve),
     hidden: true
   },

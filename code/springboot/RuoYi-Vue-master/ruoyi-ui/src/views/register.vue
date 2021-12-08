@@ -1,7 +1,7 @@
 <template>
   <div class="register">
     <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="register-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">账号注册</h3>
       <el-form-item prop="username">
         <el-input v-model="registerForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
@@ -60,9 +60,9 @@
       </el-form-item>
     </el-form>
     <!--  底部  -->
-    <div class="el-register-footer">
+  <!--  <div class="el-register-footer">
       <span>Copyright © 2018-2021 ruoyi.vip All Rights Reserved.</span>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -151,24 +151,35 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/login-background.jpg");
+  background:#283443;
   background-size: cover;
 }
 .title {
   margin: 0px auto 30px auto;
   text-align: center;
-  color: #707070;
+  color: #ffffff;
+  font-size: 3vh;
+  font-weight: bold;
 }
 
 .register-form {
   border-radius: 6px;
-  background: #ffffff;
+  // background: #ffffff;
   width: 400px;
   padding: 25px 25px 5px 25px;
   .el-input {
     height: 38px;
+
     input {
-      height: 38px;
+      height: 42px;
+      font-size: 1.6vh;
+      // background-color: #eee;
+      color: #fff;
+      background: rgba($color: #000000, $alpha: 0.1);
+      // color: rgba($color: #fff, $alpha: 1.0);
+      // background: transparent !important;
+      border: 1px rgba($color: #ffffff, $alpha: 0.1) solid;
+      // padding:5px ;
     }
   }
   .input-icon {
@@ -205,5 +216,6 @@ export default {
 }
 .register-code-img {
   height: 38px;
+  width: 100%;
 }
 </style>
